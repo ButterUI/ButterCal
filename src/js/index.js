@@ -1,15 +1,17 @@
 ;(function(){
   "use strict";
 
-  function ButterCal() {
+  function ButterCal(options) {
+    this.WEEKSTART = options.weekstart || 0;
+
     this.calInit();
   }
 
   ButterCal.prototype.calInit = function() {
-    this.WEEKDAYS = 'SUN MON TUE WED THU FRI SAT'.split(' ');
     let currentMonth = this.getCalMonth();
 
     console.log(currentMonth);
+    console.log(this.formatWeekday(3, 'dddd'));
   };
 
   /**
@@ -19,9 +21,8 @@
    * @param weekStart Int - The day that weeks start on. defaults to 0 (Sunday).
    * @returns {{month: (int), dayOfWeek: (int), dateOfMonth: (int), year: (int), data: Array}}
    */
-  ButterCal.prototype.getCalMonth = function(date, weekStart) {
-    // TODO: add weekstart option.
-    weekStart = weekStart || 0;
+  ButterCal.prototype.getCalMonth = function(date) {
+    let weekStart = this.WEEKSTART;
 
     const dayOfWeek = moment(date).day();
     const year = moment(date).year();
@@ -40,9 +41,8 @@
       let week = [];
 
       // Iterate over days of week...
-      for (let j=0; j<7; j++) {
+      for (let j=weekStart; j<7; j++) {
         iterations++;
-
         let day = {};
 
         if (i === 0 && j < dayOfWeek) {
@@ -80,6 +80,17 @@
     };
   };
 
+  /**
+   * Get a formatted string representing the passed day of the week.
+   *
+   * @param day - Int representing a day in the week.
+   * @param format - Moment.js format string.
+   * @returns {string}
+   */
+  ButterCal.prototype.formatWeekday = function(day, format) {
+    return moment().day(day + this.WEEKSTART).format(format);
+  };
+
   //---------------------------------
   // PRIVATE FUNCTIONS
   //---------------------------------
@@ -94,9 +105,10 @@
     return m===2?y&3||!(y%25)&&y&15?28:29:30+(m+(m>>3)&1);
   };
 
-
   // Call butterCal
   window.butterCal = ButterCal;
-  var cal = new ButterCal();
+  var cal = new ButterCal({
+    weekstart: 1
+  });
 })();
 
