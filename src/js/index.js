@@ -33,7 +33,7 @@
     const weeksInMonth = Math.ceil(daysInMonth/7);
     const calendar = new Array(weeksInMonth);
 
-    let totalIterations = 0;
+    let iterations = 0;
 
     // Iterate over weeks...
     for (let i=0; i<calendar.length; i++) {
@@ -41,17 +41,31 @@
 
       // Iterate over days of week...
       for (let j=0; j<7; j++) {
-        totalIterations++;
+        iterations++;
+
+        let day = {};
 
         if (i === 0 && j < dayOfWeek) {
           // Back-fill the end of last month
-          week.push(daysInLastMonth - dayOfWeek + j + 1);
-        } else if (totalIterations > daysInMonth) {
+          day['date'] = daysInLastMonth - dayOfWeek + j + 1;
+          day['year'] = lastMonthYear;
+          day['month'] = lastMonth;
+          iterations = 0;
+        } else if (iterations > daysInMonth) {
           // Fill in last week of month starting from 1.
-          week.push(totalIterations - daysInMonth);
+          day['date'] = iterations - daysInMonth;
+          day['year'] = year;
+          day['month'] = month;
         } else {
-          week.push(totalIterations);
+          day['date'] = iterations;
+          day['year'] = year;
+          day['month'] = month;
         }
+
+        day['weekday'] = dayOfWeek;
+        day['timestamp'] = +moment([day.year, day.month-1, day.date]);
+
+        week.push(day);
       }
 
       calendar[i] = week;
@@ -62,7 +76,7 @@
       dayOfWeek: dayOfWeek,
       dateOfMonth: moment(date).date(),
       year: year,
-      data: calendar
+      data: calendar,
     };
   };
 
