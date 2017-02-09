@@ -5,8 +5,12 @@ var concat = require("gulp-concat");
 var browserify = require("gulp-browserify");
 var browserSync = require('browser-sync').create();
 
-gulp.task('serve', ['scripts'], function() {
+var scriptsSrc = [
+  "src/js/butterCalCore.js",
+  "src/js/butterCalUI.js"
+];
 
+gulp.task('serve', ['scripts'], function() {
   browserSync.init({
     server: "./"
   });
@@ -16,7 +20,7 @@ gulp.task('serve', ['scripts'], function() {
 });
 
 gulp.task("scripts", function () {
-  return gulp.src("src/js/index.js")
+  return gulp.src(scriptsSrc)
     // .pipe(sourcemaps.init())
     .pipe(babel())
     .pipe(browserify({

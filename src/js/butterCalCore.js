@@ -1,13 +1,13 @@
 ;(function(){
   "use strict";
 
-  function ButterCal(options) {
+  function ButterCalCore(options) {
     this.WEEKSTART = options.weekstart || 0;
 
     this.calInit();
   }
 
-  ButterCal.prototype.calInit = function() {
+  ButterCalCore.prototype.calInit = function() {
     let currentMonth = this.getCalMonth();
 
     console.log(currentMonth);
@@ -21,7 +21,7 @@
    * @param weekStart Int - The day that weeks start on. defaults to 0 (Sunday).
    * @returns {{month: (int), dayOfWeek: (int), dateOfMonth: (int), year: (int), data: Array}}
    */
-  ButterCal.prototype.getCalMonth = function(date) {
+  ButterCalCore.prototype.getCalMonth = function(date) {
     let weekStart = this.WEEKSTART;
 
     const dayOfWeek = moment(date).day();
@@ -87,7 +87,7 @@
    * @param format - Moment.js format string.
    * @returns {string}
    */
-  ButterCal.prototype.formatWeekday = function(day, format) {
+  ButterCalCore.prototype.formatWeekday = function(day, format) {
     return moment().day(day + this.WEEKSTART).format(format);
   };
 
@@ -101,13 +101,14 @@
    * @param {int} y = Year
    * @returns {number}
    */
-  ButterCal.prototype._daysInMonth = function(m, y) {
+  ButterCalCore.prototype._daysInMonth = function(m, y) {
     return m===2?y&3||!(y%25)&&y&15?28:29:30+(m+(m>>3)&1);
   };
 
   // Call butterCal
-  window.butterCal = ButterCal;
-  var cal = new ButterCal({
+  window.butterCal = ButterCalCore;
+
+  var cal = new ButterCalCore({
     weekstart: 1
   });
 })();
