@@ -1,0 +1,123 @@
+
+$black: #000;
+$darkest-gray: #222;
+$darker-gray: #444;
+$dark-gray: #666;
+$gray: #999;
+$light-gray: #ccc;
+$lighter-gray: #ddd;
+$lightest-gray: #eee;
+$white: #fff;
+
+$width-1-7: 14.28571%;
+
+// convenience vars
+$border-width: 2px;
+
+html,
+body {
+  font-family: Helvetica, sans-serif;
+}
+
+div {
+  font-family: Helvetica, sans-serif;
+}
+
+.butter-cal-wrapper {
+  // Set plugin defaults and resets
+  box-sizing: border-box;
+  * {
+    box-sizing: border-box;
+  }
+  button {
+    border: none;
+    background: none;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+
+  max-width: 800px;
+  .calendar {
+    border: 3px solid $dark-gray;
+    padding: $border-width;
+    background-color: $white;
+  }
+
+  .month {
+    display: flex;
+    padding: 20px 10px;
+    border: $border-width solid $white;
+    background-color: $dark-gray;
+  }
+  .month-name {
+    flex-grow: 1;
+    text-align: center;
+    color: $white;
+    font-size: 22px;
+  }
+  .previous-view,
+  .next-view {
+    display: flex;
+    button {
+      color: $white;
+      padding: 0 15px;
+      font-size: 20px;
+    }
+  }
+
+  .day-headers {
+    display: flex;
+  }
+  .day-header {
+    width: $width-1-7;
+    padding: 10px 5px;
+    background-color: $gray;
+    border: $border-width solid $white;
+    text-align: center;
+    font-size: 16px;
+  }
+
+  .days {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .day {
+    width: $width-1-7;
+    height: 60px;
+    padding: 5px;
+    background-color: $lighter-gray;
+    border: $border-width solid $white;
+    text-align: center;
+    font-size: 14px;
+    transition: background-color 400ms ease, border-color 400ms ease;
+
+    // Horizontal and verical alignment of the date
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &.weekend {
+      background-color: rgba($lighter-gray, 0.7);
+    }
+
+    &.next-month,
+    &.previous-month {
+      background-color: $lightest-gray;
+      &.weekend {
+        background-color: rgba($lightest-gray, 0.7);
+      }
+    }
+
+    &:hover {
+      background-color: $white;
+      border-color: $gray;
+    }
+
+    &.active {
+      background-color: $white;
+      border-color: $darker-gray;
+    }
+  }
+}
