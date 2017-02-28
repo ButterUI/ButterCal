@@ -68,6 +68,8 @@ endcal.restrict(cal, '>='); // endcal must be greater than or equal to cal
 
 ## Events
 
+Events can be defined by any module.
+
 ```js
 // Add some events
 cal.on('change', function(e, calendar) {
@@ -79,6 +81,3 @@ cal.on('nextMonth', function() {
 });
 
 ```
-
-Events can be defined by any
-
